@@ -1,0 +1,56 @@
+<div layout="column" ng-cloak class="md-inline-form">
+  <!--md-content md-theme="docs-dark" layout-padding layout="row" layout-sm="column">
+    <md-input-container>
+      <label>Title</label>
+      <input ng-model="user.title">
+    </md-input-container>
+    <md-input-container>
+      <label>Email</label>
+      <input ng-model="user.email" type="email">
+    </md-input-container>
+  </md-content-->
+  <md-content layout-padding>
+    <form name="userForm">
+        <div layout layout-sm="column">
+          <md-input-container flex>
+              <div flex="10" layout layout-align="">
+                  <span class="md-body-1">Distribution and Production for: <b>{{typeFuel}}</b></span>
+              </div>
+              <md-radio-group ng-model="typeFuel" layout="row">
+                <md-radio-button value="Gas">Gas</md-radio-button>
+                <md-radio-button value="Oil">Oil</md-radio-button>
+              </md-radio-group>
+          </md-input-container>
+        </div>
+        <md-input-container class="md-block">
+          <div flex="10" layout layout-align="">
+              <span class="md-body-1">Production Year: <b>{{prodYear}}</b></span>
+          </div>
+          <div layout>
+              <md-slider flex md-discrete ng-model="prodYear" step="1" min="1964" max="2009" aria-label="rating">
+              </md-slider>
+          </div>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+            <div flex="10" layout layout-align="">
+                <span class="md-body-1">Production Rate: <b>[{{slider.min}} - {{slider.max}}]</b></span>
+            </div>
+
+            <rzslider
+                rz-slider-model="slider.min"
+                rz-slider-high="slider.max"
+                rz-slider-options="slider.options"></rzslider>
+        </md-input-container>
+        
+        <md-content>
+    <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+        <md-button md-no-ink class="md-primary">Apply</md-button>
+        <md-button md-no-ink class="md-primary">Download JSON</md-button>
+        <md-button md-no-ink class="md-primary">Download CSV</md-button>
+    </section>
+        </md-content>
+        
+    </form>
+  </md-content>
+</div>

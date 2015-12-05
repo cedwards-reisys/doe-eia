@@ -1,14 +1,22 @@
-(function(){
-
   angular
        .module('app')
        .controller('MainController', [
-          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast',
-          MainController
-       ]);
-
-  function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast) {
+          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast', '$scope',
+          function(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, $scope) {
     var vm = this;
+    
+    //Default values
+    // In your controller
+    $scope.slider = {
+      min: 1,
+      max: 26,
+      options: {
+        floor: 1,
+        ceil: 26
+      }
+    };
+    $scope.prodYear = 2009;
+    $scope.typeFuel = 'Gas';
 
     vm.menuItems = [ ];
     vm.selectItem = selectItem;
@@ -71,6 +79,5 @@
           .position('top right')
       );
     }
-  }
+  }]);
 
-})();

@@ -1,0 +1,6 @@
+conf/vagrant/.vagrant
+src/bower_components
+src/node_modules
+npm-debug.log
+src/.sass-cache/
+src/.tmp/

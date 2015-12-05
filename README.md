@@ -31,7 +31,7 @@ $ vagrant ssh       # access to your VM (SSH)
 
 ######Note: the IP address allocated to this new VM Box is 192.168.56.107 and if you have used this IP Address, you can change it in `conf/vagrant/puphpet/config.yaml`
 
-#####Run the application without docker
+#####Run the application
 
 Inside your vagrant VM, run the following command
 

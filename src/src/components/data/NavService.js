@@ -10,14 +10,14 @@
   function navService($q){
     var menuItems = [
       {
-        name: 'Dashboard',
-        icon: 'dashboard',
+        name: 'MAP',
+        icon: 'map',
         sref: '.dashboard'
       },
       {
-        name: 'Profile',
-        icon: 'person',
-        sref: '.profile'
+        name: 'Chart',
+        icon: 'timeline',
+        sref: '.chart'
       },
       {
         name: 'Table',

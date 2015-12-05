@@ -2,7 +2,7 @@
             class="md-whiteframe-z2 md-sidenav-left">
   <md-toolbar md-theme="custom" class="md-hue-1 md-whiteframe-z2">
     <md-button layout="row" layout-align="center center" class="md-toolbar-tools md-warn"
-               href="https://github.com/flatlogic/angular-material-dashboard">
+               href="#/">
       <h1>AMD</h1>
     </md-button>
   </md-toolbar>
@@ -29,7 +29,7 @@
         <md-button hide-sm class="toolbar-button" aria-label="Search">
             <i class="material-icons">search</i>
         </md-button>
-        <md-button hide-sm class="toolbar-button" aria-label="Notifications">
+        <!--md-button hide-sm class="toolbar-button" aria-label="Notifications">
             <i class="material-icons">notifications</i>
             <span class="notifications-label">7</span>
         </md-button>
@@ -38,7 +38,7 @@
         </md-button>
         <md-button hide-gt-sm ng-click="vm.toggleItemsList()" aria-label="Menu">
             <i class="material-icons">menu</i>
-        </md-button>
+        </md-button-->
     </md-toolbar>
 
     <md-content flex class="md-padding page-content">
@@ -49,7 +49,7 @@
 <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" md-component-id="right"
             class="md-whiteframe-z2 md-sidenav-right">
     <md-toolbar layout="row">
-        <md-toolbar flex="80" class="md-warn" layout="row" layout-align="center center">
+        <!--md-toolbar flex="80" class="md-warn" layout="row" layout-align="center center">
             <img class="img-circle" ng-src="assets/images/feynman.jpg">
             <md-menu>
                 <md-button class="capitalize" ng-click="$mdOpenMenu()" aria-label="Open menu">
@@ -61,7 +61,7 @@
                     <md-menu-item><md-button ng-click="$mdCloseMenu()" ui-sref="home.dashboard">Log out</md-button></md-menu-item>
                 </md-menu-content>
             </md-menu>
-        </md-toolbar>
+        </md-toolbar-->
         <md-toolbar flex="20" layout="row" layout-align="center center">
             <md-button ng-click="vm.showActions($event)" class="toolbar-button">
                 <i class="material-icons">more_vert</i>
@@ -72,7 +72,7 @@
     <section>
         <md-toolbar md-theme="grey" class="md-hue-1">
             <div class="md-toolbar-tools">
-                <h3>Messages</h3>
+                <h3>Filters</h3>
             </div>
         </md-toolbar>
         <div ng-include src="'app/views/partials/messages.html'"/>

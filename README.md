@@ -40,4 +40,4 @@ $ cd /var/www/doe-eia/src
 $ gulp serve
 </pre>
 
-Browse URL: http://192.168.56.107:9000/
+Browse URL: http://192.168.56.107:3000/

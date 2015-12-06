@@ -7,30 +7,27 @@
 
     function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, $scope, FilterFactory, ApiInterfaceService, usSpinnerService, $rootScope) {
     var vm = this;
-    $scope.mapData = {};
+    $scope.aMapData = {};
+    $scope.aMapDataColor = {};
     $scope.isMapShown = false;
+    var aMapData = {};
+    var aMapDataColor = {};
 
     //IMPORTANT For navigating around the menus
     $rootScope.$on('$stateChangeSuccess', 
     function(event, toState, toParams, fromState, fromParams){ 
         //return to MAP menu. execute
         if(toState.name === 'home.dashboard') {
-            //show spin
-            usSpinnerService.spin('spinner');
-
             $scope.isMapShown = false;
             setTimeout(function(){$scope.loadMAPData();}, 1000);
         }
     });
 
-    //show spin
-    usSpinnerService.spin('spinner');
-
     //Default values
     // In your controller
     $scope.slider = {
-      min: 1,
-      max: 26,
+      min: 6,
+      max: 16,
       options: {
         floor: 1,
         ceil: 26
@@ -104,6 +101,8 @@
 
     //load map
     $scope.loadMAPData = function() {
+        //show spin
+        usSpinnerService.spin('spinner');
 
         //store filters in filterFactory for BarChart controller use    
         var oFilter = {
@@ -114,6 +113,7 @@
                 "max": this.slider.max
             }
         };
+
         //set filters
         FilterFactory.setFilters(oFilter);
 
@@ -121,211 +121,67 @@
         //TODO CHANGE BY ACTIVE API
         ApiInterfaceService.call('us2009Sample', '', {}).then(
         function(data){
-            console.log(data);
+            aMapData = {};
+            aMapDataColor = {};
 
-            //MAP
-            mapData = {
-                "AZ": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 5
-                },
-                "CO": {
-                    "fillKey": "Light Democrat",
-                    "electoralVotes": 5
-                },
-                "DE": {
-                    "fillKey": "Democrate",
-                    "electoralVotes": 32
-                },
-                "FL": {
-                    "fillKey": "UNDECIDED",
-                    "electoralVotes": 29
-                },
-                "GA": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "HI": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "ID": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "IL": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "IN": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 11
-                },
-                "IA": {
-                    "fillKey": "Light Democrat",
-                    "electoralVotes": 11
-                },
-                "KS": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "KY": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "LA": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "MD": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "ME": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "MA": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "MN": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "MI": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "MS": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "MO": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 13
-                },
-                "MT": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "NC": {
-                    "fillKey": "Light Republican",
-                    "electoralVotes": 32
-                },
-                "NE": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "NV": {
-                    "fillKey": "Heavy Democrat",
-                    "electoralVotes": 32
-                },
-                "NH": {
-                    "fillKey": "Light Democrat",
-                    "electoralVotes": 32
-                },
-                "NJ": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "NY": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "ND": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "NM": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "OH": {
-                    "fillKey": "UNDECIDED",
-                    "electoralVotes": 32
-                },
-                "OK": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "OR": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "PA": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "RI": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "SC": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "SD": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "TN": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "TX": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "UT": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "WI": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "VA": {
-                    "fillKey": "Light Democrat",
-                    "electoralVotes": 32
-                },
-                "VT": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "WA": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "WV": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "WY": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "CA": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "CT": {
-                    "fillKey": "Democrat",
-                    "electoralVotes": 32
-                },
-                "AK": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "AR": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
-                },
-                "AL": {
-                    "fillKey": "Republican",
-                    "electoralVotes": 32
+            //data
+            angular.forEach(data, function(object){
+                var isObjectInRateClassRange = (object.rate_class >= $scope.slider.min  && object.rate_class <= $scope.slider.max) ? true : false;
+                //Verify if we already have state in aMapData
+                if(aMapData.hasOwnProperty(object.state)) { //exist
+                    //push data into existing state
+                    //Oil 
+                    aMapData[object.state].sum_num_oil_wells += object.num_oil_wells;
+                    aMapData[object.state].sum_oil_prod_BBL += object.oil_prod_BBL;
+                    //Gas
+                    aMapData[object.state].sum_num_gas_wells += object.num_gas_wells;
+                    aMapData[object.state].sum_NAgas_prod_MCF += object.NAgas_prod_MCF;
+
+                    if(isObjectInRateClassRange) {
+                        //Oil 
+                        aMapData[object.state].sum_num_oil_wells_rate_range += object.num_oil_wells;
+                        aMapData[object.state].sum_oil_prod_BBL_rate_range += object.oil_prod_BBL;
+
+                        //Gas
+                        aMapData[object.state].sum_num_gas_wells_rate_range += object.num_gas_wells;
+                        aMapData[object.state].sum_NAgas_prod_MCF_rate_range += object.NAgas_prod_MCF;
+                    }
+                } else { //create state with data
+                    aMapData[object.state] = {
+                        prod_year: object.prod_year,
+                        fillKey: "colorTBD",
+                        //Oil
+                        sum_num_oil_wells: object.num_oil_wells,
+                        sum_num_oil_wells_rate_range: (isObjectInRateClassRange) ? object.num_oil_wells : 0,
+                        sum_oil_prod_BBL: object.oil_prod_BBL,
+                        sum_oil_prod_BBL_rate_range: (isObjectInRateClassRange) ? object.oil_prod_BBL : 0,
+                        //Gas
+                        sum_num_gas_wells: object.num_gas_wells,
+                        sum_num_gas_wells_rate_range: (isObjectInRateClassRange) ? object.num_gas_wells : 0,
+                        sum_NAgas_prod_MCF: object.NAgas_prod_MCF,
+                        sum_NAgas_prod_MCF_rate_range: (isObjectInRateClassRange) ? object.NAgas_prod_MCF : 0
+                    };
                 }
-            };
+            });
+
+            //set color based on % column
+            angular.forEach(aMapData, function(object, state){
+                var sumGasWells = (object.sum_num_gas_wells === 0) ? 1 : object.sum_num_gas_wells;
+                var sumOilWells = (object.sum_num_oil_wells === 0) ? 1 : object.sum_num_oil_wells;
+
+                //set color based on gas column
+                if($scope.energyType === 'Gas') {
+                    aMapDataColor[state] = d3.interpolate("#ffffcc", "#800026")(object.sum_num_gas_wells_rate_range/sumGasWells);
+                } else { //set color based on Oil column
+                    aMapDataColor[state] = d3.interpolate("#ffffcc", "#800026")(object.sum_num_oil_wells_rate_range/sumOilWells);
+                }
+            });
+
+            console.log(aMapData);
+            console.log(aMapDataColor);
+
+            $scope.aMapData = aMapData;
+            $scope.aMapDataColor = aMapDataColor;
 
             if(!$scope.isMapShown) {
                 $scope.drawMap();
@@ -369,12 +225,10 @@
                 highlightFillColor: '#aeb0b5'
             },
             "fills": {
-                "UNDECIDED": '#a389dc',
-                "Republican": '#FF5C33',
-                "Democrat": '#fad980',
+                "colorTBD": '#fad980',
                 "defaultFill": '#f1f1f1'
             },
-            "data": mapData,
+            "data": $scope.aMapData,
             "done": function(datamap) {
                 datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
                     //load fema news by state
@@ -386,18 +240,15 @@
                 function redraw() {
                     datamap.svg.selectAll("g").attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
                 }
-
-    //            datamap.svg.selectAll(".datamaps-subunit")
-    //            .style("fill", function(d, i){
-    //                console.
-    //                //return d.y > 50 ? "red":"blue";
-    //            });
             }
         });
 
+        //set state colors
+        map.updateChoropleth($scope.aMapDataColor);
+
         //draw a legend for this map
         map.labels();
-        map.legend();
+        //map.legend();
 
         //set flag
         $scope.isMapShown = true;

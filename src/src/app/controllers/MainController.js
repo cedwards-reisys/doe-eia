@@ -2,13 +2,26 @@
   angular
        .module('app')
        .controller('MainController', [
-          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast', '$scope', 'FilterFactory', 'ApiInterfaceService', 'usSpinnerService',
+          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast', '$scope', 'FilterFactory', 'ApiInterfaceService', 'usSpinnerService', '$rootScope',
           MainController]);
 
-    function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, $scope, FilterFactory, ApiInterfaceService, usSpinnerService) {
+    function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, $scope, FilterFactory, ApiInterfaceService, usSpinnerService, $rootScope) {
     var vm = this;
     $scope.mapData = {};
     $scope.isMapShown = false;
+
+    //IMPORTANT For navigating around the menus
+    $rootScope.$on('$stateChangeSuccess', 
+    function(event, toState, toParams, fromState, fromParams){ 
+        //return to MAP menu. execute
+        if(toState.name === 'home.dashboard') {
+            //show spin
+            usSpinnerService.spin('spinner');
+
+            $scope.isMapShown = false;
+            setTimeout(function(){$scope.loadMAPData();}, 1000);
+        }
+    });
 
     //show spin
     usSpinnerService.spin('spinner');
@@ -99,7 +112,7 @@
             "energyRateClass": {
                 "min": this.slider.min,
                 "max": this.slider.max
-            },
+            }
         };
         //set filters
         FilterFactory.setFilters(oFilter);
@@ -313,7 +326,7 @@
                     "electoralVotes": 32
                 }
             };
-            
+
             if(!$scope.isMapShown) {
                 $scope.drawMap();
             }
@@ -385,12 +398,12 @@
         //draw a legend for this map
         map.labels();
         map.legend();
-            
+
         //set flag
         $scope.isMapShown = true;
     };
 
-    setTimeout(function(){$scope.loadMAPData()}, 1000);
+    setTimeout(function(){$scope.loadMAPData();}, 1000);
   };
 
 })();

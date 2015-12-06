@@ -125,7 +125,7 @@
                 "max": this.slider.max
             }
         };
-        
+
         //set filters
         FilterFactory.setFilters(oFilter);
 
@@ -162,6 +162,7 @@
                     aMapData[object.state] = {
                         prod_year: object.prod_year,
                         fillKey: "colorTBD",
+                        state: object.state,
                         //Oil
                         sum_num_oil_wells: object.num_oil_wells,
                         sum_num_oil_wells_rate_range: (isObjectInRateClassRange) ? object.num_oil_wells : 0,
@@ -191,8 +192,8 @@
                 }
             });
 
-            console.log(aMapData);
-            console.log(aMapDataColor);
+//            console.log(aMapData);
+//            console.log(aMapDataColor);
 
             $scope.aMapData = aMapData;
             $scope.aMapDataColor = aMapDataColor;
@@ -200,7 +201,8 @@
             if(!$scope.isMapShown) {
                 $scope.drawMap();
             } else {
-                //change only color on map
+                //change color amd data on map
+                oMap.updateChoropleth($scope.aMapData);
                 oMap.updateChoropleth($scope.aMapDataColor);
             }
 
@@ -219,23 +221,25 @@
             "scope": 'usa',
             "geographyConfig": {
                 "highlightBorderColor": '#bada55',
-                "popupTemplate": function(geography, data) {
+                "popupTemplate": function(geography, data) { //tooltip
                     var html = '<div class="hoverinfo">';
-                        html += '<h4>'+geography.properties.name+'</h4>';
-    //                        if(data) {
-    //                            html +='<hr/>';
-    //                            angular.forEach(data.data, function(row){
-    //                                html +='<p><b>Disaster Name</b>: '+ row.disasterName +'<br />';
-    //                                html +='<b>Disaster Type</b>: '+ row.disasterType +'<br />';
-    //                                html +='<b>Disaster Date</b>: '+ row.date.start +'';
-    //                                if(typeof row.date.end !== 'undefined' && row.date.end !== null) {
-    //                                    html +='<br /><b>Disaster Date End</b>: '+ row.date.end;
-    //                                }
-    //                                html +='</p>';
-    //                            });
-    //                        }
+                    html += '<h4>'+geography.properties.name+'</h4>';
+                    if(data) {
+                        var sumAnnGasWells = (data.sum_NAgas_prod_MCF === 0) ? 1 : data.sum_NAgas_prod_MCF;
+                        var sumAnnOilWells = (data.sum_oil_prod_BBL === 0) ? 1 : data.sum_oil_prod_BBL;
+                        var sumGasWells = (data.sum_num_gas_wells === 0) ? 1 : data.sum_num_gas_wells;
+                        var sumOilWells = (data.sum_num_oil_wells === 0) ? 1 : data.sum_num_oil_wells;
+                
+                        html +='<hr/>';
+                        html +='<p><b>Year</b>: '+ data.prod_year +'<br />';
+                        html +='<b>'+Math.round(((data.sum_num_gas_wells_rate_range / sumGasWells) * 100))+'%</b> of Gas Wells <br />';
+                        html +='<b>'+Math.round(((data.sum_num_oil_wells_rate_range / sumOilWells) * 100))+'%</b> of Oil Wells <br />';
+                        html +='<b>'+Math.round(((data.sum_NAgas_prod_MCF_rate_range / sumAnnGasWells) * 100))+'%</b> of Annual Gas Production <br />';
+                        html +='<b>'+Math.round(((data.sum_oil_prod_BBL_rate_range / sumAnnOilWells) * 100))+'%</b> of Annual Oil Production <br />';
+                        html +='</p>';
+                    }
 
-                        html += '</div>';
+                    html += '</div>';
                     return html;
                 },
                 highlightBorderWidth: 0.5,

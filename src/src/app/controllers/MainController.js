@@ -10,6 +10,7 @@
     $scope.aMapData = {};
     $scope.aMapDataColor = {};
     $scope.isMapShown = false;
+    var oMap = null;
     var aMapData = {};
     var aMapDataColor = {};
 
@@ -113,7 +114,7 @@
                 "max": this.slider.max
             }
         };
-
+        
         //set filters
         FilterFactory.setFilters(oFilter);
 
@@ -168,12 +169,14 @@
             angular.forEach(aMapData, function(object, state){
                 var sumGasWells = (object.sum_num_gas_wells === 0) ? 1 : object.sum_num_gas_wells;
                 var sumOilWells = (object.sum_num_oil_wells === 0) ? 1 : object.sum_num_oil_wells;
+                var minColor = (oFilter.energyType === 'Oil') ? "#ffffcc" : "#f5fdff";
+                var maxColor = (oFilter.energyType === 'Oil') ? "#800026" : "#00b8e6";
 
                 //set color based on gas column
-                if($scope.energyType === 'Gas') {
-                    aMapDataColor[state] = d3.interpolate("#ffffcc", "#800026")(object.sum_num_gas_wells_rate_range/sumGasWells);
+                if(oFilter.energyType === 'Gas') {
+                    aMapDataColor[state] = d3.interpolate(minColor, maxColor)(object.sum_num_gas_wells_rate_range/sumGasWells);
                 } else { //set color based on Oil column
-                    aMapDataColor[state] = d3.interpolate("#ffffcc", "#800026")(object.sum_num_oil_wells_rate_range/sumOilWells);
+                    aMapDataColor[state] = d3.interpolate(minColor, maxColor)(object.sum_num_oil_wells_rate_range/sumOilWells);
                 }
             });
 
@@ -185,6 +188,9 @@
 
             if(!$scope.isMapShown) {
                 $scope.drawMap();
+            } else {
+                //change only color on map
+                oMap.updateChoropleth($scope.aMapDataColor);
             }
 
             //show spin
@@ -197,7 +203,7 @@
 
     //draw map
     $scope.drawMap = function() {
-        var map = new Datamap({
+        oMap = new Datamap({
             "element": document.getElementById('mapContainer'),
             "scope": 'usa',
             "geographyConfig": {
@@ -244,11 +250,11 @@
         });
 
         //set state colors
-        map.updateChoropleth($scope.aMapDataColor);
+        oMap.updateChoropleth($scope.aMapDataColor);
 
         //draw a legend for this map
-        map.labels();
-        //map.legend();
+        oMap.labels();
+        //oMap.legend();
 
         //set flag
         $scope.isMapShown = true;

@@ -14,16 +14,6 @@
     var aMapData = {};
     var aMapDataColor = {};
 
-    //IMPORTANT For navigating around the menus
-    $rootScope.$on('$stateChangeSuccess', 
-    function(event, toState, toParams, fromState, fromParams){ 
-        //return to MAP menu. execute
-        if(toState.name === 'home.dashboard') {
-            $scope.isMapShown = false;
-            setTimeout(function(){$scope.loadMAPData();}, 1000);
-        }
-    });
-
     //Default values
     // In your controller
     $scope.slider = {
@@ -37,6 +27,27 @@
 
     $scope.energyYear = 2009;
     $scope.energyType = 'Gas';
+    
+    //END Default Values
+    
+    //IMPORTANT For navigating around the menus
+    $rootScope.$on('$stateChangeSuccess', 
+    function(event, toState, toParams, fromState, fromParams){ 
+        //return to MAP menu. execute
+        if(toState.name === 'home.dashboard') {
+            $scope.isMapShown = false;
+
+            var oFilter = FilterFactory.getFilters();
+
+            $scope.slider.min = oFilter.energyRateClass.min;
+            $scope.slider.max = oFilter.energyRateClass.max;
+
+            $scope.energyYear = oFilter.energyYear;
+            $scope.energyType = oFilter.energyType;
+
+            setTimeout(function(){$scope.loadMAPData();}, 1000);
+        }
+    });
 
     vm.menuItems = [ ];
     vm.selectItem = selectItem;

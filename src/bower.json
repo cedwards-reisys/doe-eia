@@ -18,13 +18,15 @@
     "topojson": "*",
     "datamaps": "*",
     "angular-nvd3": "*",
-    "angularjs-slider": "*"
+    "angularjs-slider": "*",
+    "angular-spinner": "*"
 },
   "devDependencies": {
     "angular-mocks": "~1.3.4"
   },
   "resolutions": {
     "angular": "~1.3.4",
-    "d3": "^3.3.13"
+    "d3": "^3.3.13",
+    "angular-touch": "^1.3.4"
   }
 }

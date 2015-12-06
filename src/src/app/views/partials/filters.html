@@ -14,9 +14,9 @@
         <div layout layout-sm="column">
           <md-input-container flex>
               <div flex="10" layout layout-align="">
-                  <span class="md-body-1">Distribution and Production for: <b>{{typeFuel}}</b></span>
+                  <span class="md-body-1">Distribution and Production for: <b>{{energyType}}</b></span>
               </div>
-              <md-radio-group ng-model="typeFuel" layout="row">
+              <md-radio-group ng-model="energyType" layout="row">
                 <md-radio-button value="Gas">Gas</md-radio-button>
                 <md-radio-button value="Oil">Oil</md-radio-button>
               </md-radio-group>
@@ -24,10 +24,10 @@
         </div>
         <md-input-container class="md-block">
           <div flex="10" layout layout-align="">
-              <span class="md-body-1">Production Year: <b>{{prodYear}}</b></span>
+              <span class="md-body-1">Production Year: <b>{{energyYear}}</b></span>
           </div>
           <div layout>
-              <md-slider flex md-discrete ng-model="prodYear" step="1" min="1964" max="2009" aria-label="rating">
+              <md-slider flex md-discrete ng-model="energyYear" step="1" min="1919" max="2009" aria-label="rating">
               </md-slider>
           </div>
         </md-input-container>
@@ -45,7 +45,7 @@
         
         <md-content>
     <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-        <md-button md-no-ink class="md-primary">Apply</md-button>
+        <md-button md-no-ink class="md-primary" ng-click="loadMAPData()">Apply</md-button>
         <md-button md-no-ink class="md-primary">Download JSON</md-button>
         <md-button md-no-ink class="md-primary">Download CSV</md-button>
     </section>

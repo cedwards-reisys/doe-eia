@@ -1,7 +1,10 @@
   angular
     .module('app')
-    .controller('ChartController', function() {
+    .controller('ChartController', ['FilterFactory', '$scope', function(FilterFactory, $scope) {
         var vm = this;
+        $scope.isMapShown = false;
+
+        console.log(FilterFactory.getFilters());
 
         vm.user = {
           title: 'Admin',
@@ -16,5 +19,5 @@
           'Our focus is JavaScript development and User Interface design.',
           postalCode : '220007'
         };
-  });
+  }]);
 

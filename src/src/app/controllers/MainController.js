@@ -2,14 +2,15 @@
   angular
        .module('app')
        .controller('MainController', [
-          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast', '$scope', 'FilterFactory', 'ApiInterfaceService', 'usSpinnerService', '$rootScope',
+          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast', '$scope', 'FilterFactory', 'ApiInterfaceService', 'usSpinnerService', '$rootScope', 'DataFactory',
           MainController]);
 
-    function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, $scope, FilterFactory, ApiInterfaceService, usSpinnerService, $rootScope) {
+    function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, $scope, FilterFactory, ApiInterfaceService, usSpinnerService, $rootScope, DataFactory) {
     var vm = this;
     $scope.aMapData = {};
     $scope.aMapDataColor = {};
     $scope.isMapShown = false;
+    $scope.currentState = '';
     var oMap = null;
     var aMapData = {};
     var aMapDataColor = {};
@@ -135,6 +136,8 @@
         function(data){
             aMapData = {};
             aMapDataColor = {};
+            //set data in factory
+            DataFactory.setData(data);
 
             //data
             angular.forEach(data, function(object){
@@ -280,8 +283,7 @@
 
     //Pie chart
     $scope.loadPieChartProductionByState = function(state) {
-        console.log('dkhal: '+state );
-        console.log($scope.aMapData[state]);
+        $scope.currentState = state;
 
         if($scope.aMapData.hasOwnProperty(state)) {
             //Donut chart example

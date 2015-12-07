@@ -19,7 +19,8 @@
     "datamaps": "*",
     "angular-nvd3": "*",
     "angularjs-slider": "*",
-    "angular-spinner": "*"
+    "angular-spinner": "*",
+    "angular-material-data-table": "*"
 },
   "devDependencies": {
     "angular-mocks": "~1.3.4"

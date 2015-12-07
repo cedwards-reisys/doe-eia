@@ -1,26 +1,79 @@
 <!-- TODO: Replace table to table component when https://github.com/angular/material/issues/796 will closed -->
-<div class="table-responsive-vertical md-whiteframe-z1">
+<!--div class="table-responsive-vertical md-whiteframe-z1">
     <table id="table" class="table table-hover table-bordered">
         <thead>
         <tr>
             <th>#</th>
-            <th>Issue</th>
-            <th>Status</th>
-            <th>Progress</th>
+            <th>state</th>
+            <th>Year</th>
+            <th>rate_class</th>
+            <th>num_oil_wells</th>
+            <th>oil_prod_BBL</th>
+            <th>ADgas_prod_MCF</th>
+            <th>oil_wells_dayson</th>
+            <th>num_gas_wells</th>
+            <th>NAgas_prod_MCF</th>
+            <th>conden_prod_BBL</th>
+            <th>gas_wells_dayson</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="data in vm.tableData track by $index">
             <td data-title="ID">{{$index + 1}}</td>
-            <td data-title="Issue">{{data.issue}}</td>
-            <td data-title="Status">{{data.status}}</td>
-            <td data-title="Progress">
-                <md-progress-linear class="table-progress {{data.class}}"
-                                    md-mode="determinate"
-                                    value={{data.progress}}>
-                </md-progress-linear>
-            </td>
+            <td data-title="State">{{data.state}}</td>
+            <td data-title="prod_year">{{data.prod_year}}</td>
+            <td data-title="rate_class">{{data.rate_class}}</td>
+            <td data-title="num_oil_wells">{{data.num_oil_wells}}</td>
+            <td data-title="oil_prod_BBL">{{data.oil_prod_BBL}}</td>
+            <td data-title="ADgas_prod_MCF">{{data.ADgas_prod_MCF}}</td>
+            <td data-title="oil_wells_dayson">{{data.oil_wells_dayson}}</td>
+            <td data-title="num_gas_wells">{{data.num_gas_wells}}</td>
+            <td data-title="NAgas_prod_MCF">{{data.NAgas_prod_MCF}}</td>
+            <td data-title="conden_prod_BBL">{{data.conden_prod_BBL}}</td>
+            <td data-title="gas_wells_dayson">{{data.gas_wells_dayson}}</td>
         </tr>
         </tbody>
     </table>
-</div>
+</div-->
+
+
+<md-data-table-toolbar>
+  <h2 class="md-title">Table</h2>
+</md-data-table-toolbar>
+
+<md-data-table-container>
+  <table md-data-table md-row-select="selected">
+    <thead >
+      <tr>
+        <th name="state"></th>
+        <th numeric name="prod_year"></th>
+        <th numeric name="rate_class"></th>
+        <th numeric name="num_oil_wells"></th>
+        <th numeric name="oil_prod_BBL"></th>
+        <th numeric name="ADgas_prod_MCF"></th>
+        <th numeric name="oil_wells_dayson"></th>
+        <th numeric name="num_gas_wells"></th>
+        <th numeric name="NAgas_prod_MCF"></th>
+        <th numeric name="conden_prod_BBL"></th>
+        <th numeric name="gas_wells_dayson"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr md-auto-select ng-repeat="row in data">
+        <td>{{row.state}}</td>
+        <td>{{row.prod_year}}</td>
+        <td>{{row.rate_class }}</td>
+        <td>{{row.num_oil_wells}}</td>
+        <td>{{row.oil_prod_BBL}}</td>
+        <td>{{row.ADgas_prod_MCF}}</td>
+        <td>{{row.oil_wells_dayson}}</td>
+        <td>{{row.num_gas_wells}}</td>
+        <td>{{row.NAgas_prod_MCF}}</td>
+        <td>{{row.conden_prod_BBL}}</td>
+        <td>{{row.gas_wells_dayson}}</td>
+      </tr>
+    </tbody>
+  </table>
+</md-data-table-container>
+
+<md-data-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{data.length}}" md-trigger="onPaginationChange"></md-data-table-pagination>

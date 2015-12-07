@@ -253,7 +253,8 @@
             "done": function(datamap) {
                 datamap.svg.selectAll('.datamaps-subunit').on('click', function(geography) {
                     //load fema news by state
-    //                    $scope.loadFemaNewsByState(geography.properties.name);
+                    console.log(geography.properties.name);
+                    $scope.loadPieChartProductionByState(geography.id);
                 });
 
                 datamap.svg.call(d3.behavior.zoom().scaleExtent([1, 5]).on("zoom", redraw));
@@ -276,6 +277,61 @@
     };
 
     setTimeout(function(){$scope.loadMAPData();}, 1000);
+
+    //Pie chart
+    $scope.loadPieChartProductionByState = function(state) {
+        console.log('dkhal: '+state );
+        console.log($scope.aMapData[state]);
+    
+        if($scope.aMapData.hasOwnProperty(state)) {
+            //Donut chart example
+            nv.addGraph(function() {
+                var chart = nv.models.pieChart()
+                    .x(function(d) { return d.label })
+                    .y(function(d) { return d.value })
+                    .showLabels(true)     //Display pie labels
+                    .labelThreshold(.05)  //Configure the minimum slice size for labels to show up
+                    .labelType("percent") //Configure what type of data to show in the label. Can be "key", "value" or "percent"
+                    .donut(true)          //Turn on Donut mode. Makes pie chart look tasty!
+                    .donutRatio(0.5)     //Configure how big you want the donut hole size to be.
+                    ;
+
+                //PieChart Annual Comparison Oil/Gas Production
+                var sumAnnGasWells = ($scope.aMapData[state].sum_NAgas_prod_MCF === 0) ? 1 : $scope.aMapData[state].sum_NAgas_prod_MCF;
+                var sumAnnOilWells = ($scope.aMapData[state].sum_oil_prod_BBL === 0) ? 1 : $scope.aMapData[state].sum_oil_prod_BBL;
+
+                d3.select("#chartAnnual svg")
+                .datum([{
+                    "label": '% of Annual Gas Production',
+                    "value": Math.round(($scope.aMapData[state].sum_NAgas_prod_MCF_rate_range / sumAnnGasWells) * 100)
+                },{
+                    "label": '% of Annual Oil Production',
+                    "value": Math.round(($scope.aMapData[state].sum_oil_prod_BBL_rate_range / sumAnnOilWells) * 100)
+                }])
+                .transition().duration(350)
+                .call(chart);
+
+                //PieChart for wells
+                var sumGasWells = ($scope.aMapData[state].sum_num_gas_wells === 0) ? 1 : $scope.aMapData[state].sum_num_gas_wells;
+                var sumOilWells = ($scope.aMapData[state].sum_num_oil_wells === 0) ? 1 : $scope.aMapData[state].sum_num_oil_wells;
+
+                d3.select("#chartWells svg")
+                .datum([{
+                    "label": '% of Gas Wells',
+                    "value": Math.round((($scope.aMapData[state].sum_num_gas_wells_rate_range / sumGasWells) * 100))
+                },{
+                    "label": '% of Oil Wells',
+                    "value": Math.round((($scope.aMapData[state].sum_num_oil_wells_rate_range / sumOilWells) * 100))
+                }])
+                .transition().duration(350)
+                .call(chart);
+
+                return chart;
+            });
+        } else { //hide pie chart because state doesn't have data
+            
+        }
+    };
   };
 
 })();

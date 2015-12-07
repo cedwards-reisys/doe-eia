@@ -222,12 +222,24 @@
             if(!$scope.isMapShown) {
                 $scope.drawMap();
             } else {
-                //TODO: Set color to default for all maps before assigning data map color
-                
+                ApiInterfaceService.call('usGeoloc', '', {}).then(
+                function(usStatesData){
+                    var usStatesColor = {};
+                    angular.forEach(usStatesData, function(row){
+                        usStatesColor[row.name] = '#f1f1f1';
+                    });
 
-                //change color amd data on map
-                oMap.updateChoropleth($scope.aMapData);
-                oMap.updateChoropleth($scope.aMapDataColor);
+                    //switch all state to default color
+                    oMap.updateChoropleth(usStatesColor);
+
+                    //change color amd data on map
+                    oMap.updateChoropleth($scope.aMapData);
+                    oMap.updateChoropleth($scope.aMapDataColor);
+                }, function(error){
+                    //change color amd data on map
+                    oMap.updateChoropleth($scope.aMapData);
+                    oMap.updateChoropleth($scope.aMapDataColor);
+                });
             }
 
             //execute callback function

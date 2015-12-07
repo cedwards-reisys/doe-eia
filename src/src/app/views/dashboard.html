@@ -15,6 +15,6 @@
 </div>
 
 <div layout-gt-md="row">
-    <panel-widget flex title="Comparison Oil & Gas Production: {{ currentState }}" template="app/views/partials/pieChartAnnual.html" class="fixed-height-widget"></panel-widget>
-    <panel-widget flex title="Comparison Oil & Gas Wells: {{ currentState }}" template="app/views/partials/pieChartWells.html" class="fixed-height-widget"></panel-widget>
+    <panel-widget flex title="Comparison Oil & Gas Production: {{ $parent.currentState }}" template="app/views/partials/pieChartAnnual.html" class="fixed-height-widget"></panel-widget>
+    <panel-widget flex title="Comparison Oil & Gas Wells: {{ $parent.currentState }}" template="app/views/partials/pieChartWells.html" class="fixed-height-widget"></panel-widget>
 </div>

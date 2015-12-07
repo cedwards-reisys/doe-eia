@@ -2,10 +2,10 @@
   angular
        .module('app')
        .controller('MainController', [
-          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast', '$scope', 'FilterFactory', 'ApiInterfaceService', 'usSpinnerService', '$rootScope', 'DataFactory',
+          'navService', '$mdSidenav', '$mdBottomSheet', '$log', '$q', '$state', '$mdToast', '$scope', 'FilterFactory', 'ApiInterfaceService', 'usSpinnerService', '$rootScope', 'DataFactory', '$state',
           MainController]);
 
-    function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, $scope, FilterFactory, ApiInterfaceService, usSpinnerService, $rootScope, DataFactory) {
+    function MainController(navService, $mdSidenav, $mdBottomSheet, $log, $q, $state, $mdToast, $scope, FilterFactory, ApiInterfaceService, usSpinnerService, $rootScope, DataFactory, $state) {
     var vm = this;
     $scope.aMapData = {};
     $scope.aMapDataColor = {};
@@ -113,7 +113,7 @@
     }
 
     //load map
-    $scope.loadMAPData = function() {
+    $scope.loadMAPData = function(successFnCallBack) {
         //show spin
         usSpinnerService.spin('spinner');
 
@@ -211,6 +211,11 @@
                 //change color amd data on map
                 oMap.updateChoropleth($scope.aMapData);
                 oMap.updateChoropleth($scope.aMapDataColor);
+            }
+
+            //execute callback function
+            if(typeof successFnCallBack === 'function') {
+                successFnCallBack();
             }
 
             //show spin
@@ -338,6 +343,28 @@
             
         }
     };
+
+    //range slider ended -> reload data
+    $scope.$on("slideEnded", function() {
+        // user finished sliding a handle
+        if($state.is('home.chart')) {
+            $scope.loadMAPData(function() {
+                $rootScope.$emit('reloadChart', { });
+            });
+        } else if($state.is('home.dashboard')) {
+            $scope.loadMAPData();
+        }
+    });
+
+    $scope.$watch('energyType', function(newVal, oldVal){
+        //console.log("energyType was changed to:"+newVal+", oldValue:"+oldVal);
+        //$scope.search.watch = newVal;
+        //this will be called as callbkack function after loadMapData() function is done (got triggered from ng-change tied to md-radio-button 'energyType')
+        if($state.is('home.chart')) {
+            $rootScope.$emit('reloadChart', { });
+        }
+    });
+
   };
 
 })();

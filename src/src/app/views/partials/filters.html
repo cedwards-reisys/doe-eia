@@ -14,9 +14,9 @@
         <div layout layout-sm="column">
           <md-input-container flex>
               <div flex="10" layout layout-align="">
-                  <span class="md-body-1">Distribution and Production for: <b>{{energyType}}</b></span>
+                  <span class="md-body-1">Distribution and Production for: <b>{{$parent.energyType}}</b></span>
               </div>
-              <md-radio-group ng-model="energyType" layout="row">
+              <md-radio-group ng-model="$parent.energyType" ng-change="loadMAPData()" layout="row">
                 <md-radio-button value="Gas">Gas</md-radio-button>
                 <md-radio-button value="Oil">Oil</md-radio-button>
               </md-radio-group>
@@ -24,20 +24,21 @@
         </div>
         <md-input-container class="md-block">
           <div flex="10" layout layout-align="">
-              <span class="md-body-1">Production Year: <b>{{energyYear}}</b></span>
+              <span class="md-body-1">Production Year: <b>{{$parent.energyYear}}</b></span>
           </div>
           <div layout>
-              <md-slider flex md-discrete ng-model="energyYear" step="1" min="1919" max="2009" aria-label="rating">
+              <md-slider flex md-discrete ng-change="loadMAPData()" ng-model="$parent.energyYear" step="1" min="1919" max="2009" aria-label="rating">
               </md-slider>
           </div>
         </md-input-container>
 
         <md-input-container class="md-block">
             <div flex="10" layout layout-align="">
-                <span class="md-body-1">Production Rate: <b>[{{slider.min}} - {{slider.max}}]</b></span>
+                <span class="md-body-1">Production Rate: <b>[{{$parent.slider.min}} - {{$parent.slider.max}}]</b></span>
             </div>
 
             <rzslider
+                
                 rz-slider-model="slider.min"
                 rz-slider-high="slider.max"
                 rz-slider-options="slider.options"></rzslider>
@@ -45,7 +46,7 @@
         
         <md-content>
     <section layout="row" layout-sm="column" layout-align="center center" layout-wrap>
-        <md-button md-no-ink class="md-primary" ng-click="loadMAPData()">Apply</md-button>
+        <!--<md-button md-no-ink class="md-primary" ng-click="loadMAPData()">Apply</md-button>-->
         <md-button md-no-ink class="md-primary">Download JSON</md-button>
         <md-button md-no-ink class="md-primary">Download CSV</md-button>
     </section>

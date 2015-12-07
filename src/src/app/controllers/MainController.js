@@ -130,15 +130,29 @@
         //set filters
         FilterFactory.setFilters(oFilter);
 
-        //Example for 2009 YEAR
-        //TODO CHANGE BY ACTIVE API
-        ApiInterfaceService.call('us2009Sample', '', {}).then(
+        ApiInterfaceService.call('searchAPI', '', {'$where':'prod_year='+this.energyYear, '$limit' : 10000}).then(
+//        ApiInterfaceService.call('us2009Sample', '', {}).then(
         function(data){
             aMapData = {};
             aMapDataColor = {};
 
             //data
-            angular.forEach(data, function(object){
+            angular.forEach(data.hits.hits, function(origRow){
+                origRow = origRow._source;
+                var object = {
+                    ADgas_prod_MCF: parseInt(origRow.ADgas_prod_MCF),
+                    NAgas_prod_MCF: parseInt(origRow.NAgas_prod_MCF),
+                    conden_prod_BBL: parseInt(origRow.conden_prod_BBL),
+                    gas_wells_dayson: parseInt(origRow.gas_wells_dayson),
+                    num_gas_wells: parseInt(origRow.num_gas_wells),
+                    num_oil_wells: parseInt(origRow.num_oil_wells),
+                    oil_prod_BBL: parseInt(origRow.oil_prod_BBL),
+                    oil_wells_dayson: parseInt(origRow.oil_wells_dayson),
+                    prod_year: parseInt(origRow.prod_year),
+                    rate_class: parseInt(origRow.rate_class),
+                    state: origRow.state
+                };
+
                 var isObjectInRateClassRange = (object.rate_class >= $scope.slider.min  && object.rate_class <= $scope.slider.max) ? true : false;
                 //Verify if we already have state in aMapData
                 if(aMapData.hasOwnProperty(object.state)) { //exist
@@ -208,6 +222,9 @@
             if(!$scope.isMapShown) {
                 $scope.drawMap();
             } else {
+                //TODO: Set color to default for all maps before assigning data map color
+                
+
                 //change color amd data on map
                 oMap.updateChoropleth($scope.aMapData);
                 oMap.updateChoropleth($scope.aMapDataColor);
@@ -358,6 +375,15 @@
 
     $scope.$watch('energyType', function(newVal, oldVal){
         //console.log("energyType was changed to:"+newVal+", oldValue:"+oldVal);
+        //$scope.search.watch = newVal;
+        //this will be called as callbkack function after loadMapData() function is done (got triggered from ng-change tied to md-radio-button 'energyType')
+        if($state.is('home.chart')) {
+            $rootScope.$emit('reloadChart', { });
+        }
+    });
+
+    $scope.$watch('energyYear', function(newVal, oldVal){
+        //console.log("energyYear was changed to:"+newVal+", oldValue:"+oldVal);
         //$scope.search.watch = newVal;
         //this will be called as callbkack function after loadMapData() function is done (got triggered from ng-change tied to md-radio-button 'energyType')
         if($state.is('home.chart')) {

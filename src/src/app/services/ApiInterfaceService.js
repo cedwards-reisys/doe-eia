@@ -11,6 +11,7 @@ angular.module('app').service('ApiInterfaceService', ['$http', '$q', '$log', fun
     //list of APIs we're using
     var APIs = {
         "us2009Sample": "/assets/data/2009.json",
+        "searchAPI": "http://doe-eia-api.reisys.io/search/doe"
     };
 
     this.APIs = APIs;

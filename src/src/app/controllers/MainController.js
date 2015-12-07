@@ -116,7 +116,7 @@
     $scope.loadMAPData = function(successFnCallBack) {
         //show spin
         usSpinnerService.spin('spinner');
-
+        
         //store filters in filterFactory for BarChart controller use    
         var oFilter = {
             "energyYear": this.energyYear,

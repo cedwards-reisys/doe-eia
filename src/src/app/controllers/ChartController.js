@@ -6,7 +6,7 @@
         var data = [];
         var dataOil = [];
         var dataGas = [];
-        var stateData = DataFactory.getData().stateData;
+        var stateData = [];
 
         $rootScope.$on('reloadChart', function (event, args) {
             console.log(event);
@@ -25,6 +25,7 @@
             data = [];
             dataOil = [];
             dataGas = [];
+            stateData = DataFactory.getData().stateData;
 
             angular.forEach(stateData, function(row){
                 var sumAnnGasWells = (row.sum_NAgas_prod_MCF === 0) ? 1 : row.sum_NAgas_prod_MCF;

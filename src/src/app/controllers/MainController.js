@@ -232,10 +232,10 @@
                 
                         html +='<hr/>';
                         html +='<p><b>Year</b>: '+ data.prod_year +'<br />';
-                        html +='<b>'+Math.round(((data.sum_num_gas_wells_rate_range / sumGasWells) * 100))+'%</b> of Gas Wells <br />';
-                        html +='<b>'+Math.round(((data.sum_num_oil_wells_rate_range / sumOilWells) * 100))+'%</b> of Oil Wells <br />';
-                        html +='<b>'+Math.round(((data.sum_NAgas_prod_MCF_rate_range / sumAnnGasWells) * 100))+'%</b> of Annual Gas Production <br />';
-                        html +='<b>'+Math.round(((data.sum_oil_prod_BBL_rate_range / sumAnnOilWells) * 100))+'%</b> of Annual Oil Production <br />';
+                        html +='<b>'+((data.sum_num_gas_wells_rate_range / sumGasWells) * 100).toFixed(2)+'%</b> of Gas Wells <br />';
+                        html +='<b>'+((data.sum_num_oil_wells_rate_range / sumOilWells) * 100).toFixed(2)+'%</b> of Oil Wells <br />';
+                        html +='<b>'+((data.sum_NAgas_prod_MCF_rate_range / sumAnnGasWells) * 100).toFixed(2)+'%</b> of Annual Gas Production <br />';
+                        html +='<b>'+((data.sum_oil_prod_BBL_rate_range / sumAnnOilWells) * 100).toFixed(2)+'%</b> of Annual Oil Production <br />';
                         html +='</p>';
                     }
 
@@ -282,7 +282,7 @@
     $scope.loadPieChartProductionByState = function(state) {
         console.log('dkhal: '+state );
         console.log($scope.aMapData[state]);
-    
+
         if($scope.aMapData.hasOwnProperty(state)) {
             //Donut chart example
             nv.addGraph(function() {
@@ -303,10 +303,10 @@
                 d3.select("#chartAnnual svg")
                 .datum([{
                     "label": '% of Annual Gas Production',
-                    "value": Math.round(($scope.aMapData[state].sum_NAgas_prod_MCF_rate_range / sumAnnGasWells) * 100)
+                    "value": (($scope.aMapData[state].sum_NAgas_prod_MCF_rate_range / sumAnnGasWells) * 100).toFixed(2)
                 },{
                     "label": '% of Annual Oil Production',
-                    "value": Math.round(($scope.aMapData[state].sum_oil_prod_BBL_rate_range / sumAnnOilWells) * 100)
+                    "value": (($scope.aMapData[state].sum_oil_prod_BBL_rate_range / sumAnnOilWells) * 100).toFixed(2)
                 }])
                 .transition().duration(350)
                 .call(chart);
@@ -318,10 +318,10 @@
                 d3.select("#chartWells svg")
                 .datum([{
                     "label": '% of Gas Wells',
-                    "value": Math.round((($scope.aMapData[state].sum_num_gas_wells_rate_range / sumGasWells) * 100))
+                    "value": (($scope.aMapData[state].sum_num_gas_wells_rate_range / sumGasWells) * 100).toFixed(2)
                 },{
                     "label": '% of Oil Wells',
-                    "value": Math.round((($scope.aMapData[state].sum_num_oil_wells_rate_range / sumOilWells) * 100))
+                    "value": (($scope.aMapData[state].sum_num_oil_wells_rate_range / sumOilWells) * 100).toFixed(2)
                 }])
                 .transition().duration(350)
                 .call(chart);

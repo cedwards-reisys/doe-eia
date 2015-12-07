@@ -3,11 +3,11 @@
   angular
     .module('app')
     .controller('TableController', [ 
-      '$scope', 'DataFactory', 
+      '$scope', 'DataFactory', '$location',
       TableController
     ]);
 
-  function TableController($scope, DataFactory) {
+  function TableController($scope, DataFactory, $location) {
     var vm = this;
 
     $scope.selected = [];
@@ -19,7 +19,12 @@
       page: 1
     };
 
-    $scope.data = DataFactory.getData();
+    $scope.data = DataFactory.getData().rawData;
+
+    //redirect to dashboard
+    if(typeof $scope.data === 'undefined') {
+        $location.path('/dashboard');
+    }
 
 //    function success(desserts) {
 //        $scope.desserts = desserts;

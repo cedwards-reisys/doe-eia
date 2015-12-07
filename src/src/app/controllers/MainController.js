@@ -136,8 +136,6 @@
         function(data){
             aMapData = {};
             aMapDataColor = {};
-            //set data in factory
-            DataFactory.setData(data);
 
             //data
             angular.forEach(data, function(object){
@@ -200,6 +198,12 @@
 
             $scope.aMapData = aMapData;
             $scope.aMapDataColor = aMapDataColor;
+            
+            //set data in factory
+            DataFactory.setData({
+                'rawData': data, 
+                'stateData': aMapData
+            });
 
             if(!$scope.isMapShown) {
                 $scope.drawMap();

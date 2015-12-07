@@ -7,7 +7,7 @@
  * 
  */
 angular.module('app').factory('DataFactory', [ function (){
-    var aData = [];
+    var aData = {};
 
     return {
         setData: function(_aData) {

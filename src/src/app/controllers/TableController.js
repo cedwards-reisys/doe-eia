@@ -1,30 +1,36 @@
-(function(){
+(function () {
 
-  angular
-    .module('app')
-    .controller('TableController', [ 
-      '$scope', 'DataFactory', '$location',
-      TableController
-    ]);
+    angular
+        .module('app')
+        .controller('TableController', [
+            '$scope', 'DataFactory', '$location', '$rootScope',
+            TableController
+        ]);
 
-  function TableController($scope, DataFactory, $location) {
-    var vm = this;
+    function TableController($scope, DataFactory, $location, $rootScope) {
+        var vm = this;
 
-    $scope.selected = [];
+        $scope.selected = [];
 
-    $scope.query = {
-      filter: '',
-      order: 'prod_year',
-      limit: 5,
-      page: 1
-    };
+        $scope.query = {
+            filter: '',
+            order: 'prod_year',
+            limit: 5,
+            page: 1
+        };
 
-    $scope.data = DataFactory.getData().rawData;
+        $scope.data = DataFactory.getData().rawData;
 
-    //redirect to dashboard
-    if(typeof $scope.data === 'undefined') {
-        $location.path('/dashboard');
-    }
+        //redirect to dashboard
+        if (typeof $scope.data === 'undefined') {
+            $location.path('/dashboard');
+        }
+
+        $rootScope.$on('reloadTable', function (event, args) {
+
+            $scope.fetchTableData();
+
+        });
 
 //    function success(desserts) {
 //        $scope.desserts = desserts;
@@ -48,9 +54,13 @@
 //    $scope.onPaginationChange = function (page, limit) {
 //      return $nutrition.desserts.get($scope.query, success).$promise; 
 //    };
+        $scope.fetchTableData = function () {
+            vm.tableData = DataFactory.getData();
 
-    vm.tableData = DataFactory.getData();
+        };
 
-  }
+        $scope.fetchTableData();
+
+    }
 
 })();
